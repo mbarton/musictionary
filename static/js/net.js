@@ -9,16 +9,14 @@ Pusher.log = function(msg){
 WEB_SOCKET_DEBUG = true;
 
 self.pusher = new Pusher(secret.pusher_key);
-// TODO MRB: channel for each room
-self.channel = self.pusher.subscribe('musictionary');
+self.channel = self.pusher.subscribe(MusictionaryRoom);
 self.channel.bind('change', function(data){
 	app.update(data.sample, data.position, data.enabled, "LOCAL_ONLY");
 	ui.setTrigger(data.sample, data.position, data.enabled);
 });
 
 self.pushUpdate = function(sample, step, enabled){
-	// TODO MRB: rooms!
-	var url = "change/" + "room" + "/" + sample + "/" + step;
+	var url = "change/" + MusictionaryRoom + "/" + sample + "/" + step;
 	if(enabled)
 		$.ajax(url, {type: "POST"});
 	else

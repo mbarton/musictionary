@@ -1,0 +1,109 @@
+.container
+{
+	width: 1200px;
+}
+#homepage
+{
+	width: 940px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.track
+{
+	clear: both;
+	margin-bottom: 20px;
+}
+#push_down, #homepage
+{
+	margin-top: 50px;
+}
+#sequencer .span1
+{
+	background-color: gray;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+	border-radius: 5px;
+	margin-top: 50px;
+}
+#sequencer .span1.label
+{
+	color: white;
+}
+.trigger
+{
+	cursor: pointer;
+	/*-webkit-transition: background-color .2s;*/
+	width: 50px;
+}
+.trigger:hover
+{
+	background-color: silver;
+}
+.trigger.triggered
+{
+	background-color: rgb(255, 231, 4) !important;
+}
+#sequencer .trigger.enabled
+{
+	background-color: rgb(67, 176, 48); 
+}
+.error_report
+{
+	float: right !important;
+}
+.error_report .label-important
+{
+	display: none;
+}
+#homepage
+{
+	display: none;
+}
+#homepage h1
+{
+	font-size: 3em;
+	float: left;
+	padding-bottom: 60px;
+}
+#homepage .hero-unit a
+{
+	float: right;
+	font-size: 2.5em;
+	padding: 30px;
+}
+#homepage h3
+{
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid silver;
+}
+.label-success a
+{
+	color: white;
+}
+.dark-footer
+{
+	background-color: gray;
+	margin-top: 30px;
+	height: 38px;
+}
+.dark-footer .span7
+{
+	color: #EEE;
+	font-size: .7em;
+}
+.dark-footer a
+{
+	float: right;
+	margin-left: 10px;
+}
+#controls .span3 h3
+{
+	float: left;
+	margin-right: 10px;
+}
+#tempo
+{
+	width: 100px;
+}

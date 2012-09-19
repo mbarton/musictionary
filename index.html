@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+	<title>Musictionary</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/musictionary.css" />
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+	<script type="text/javascript" src="audio.js"></script>
+	<script type="text/javascript" src="ui.js"></script>
+	<script type="text/javascript" src="musictionary.js"></script>
+</head>
+<body>
+<div class="container">
+	<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+        	<a class="brand" href="#">Musictionary</a>
+        	<a class="brand error_report">
+        		<span class="label label-success">Loading...</span>
+        		<span class="label label-important"></span>
+        	</a>
+        </div>
+      </div>
+    </div>
+    <div id="sequencer">
+    	Loading
+    </div>
+    <div id="controls">
+		<div class="row">
+			<div class="span2">
+				<h3 id="room_name">Offline Room</h3>
+			</div>
+			<div class="span2">
+				<div class="btn-group">
+					<button id="play" class="btn"><img src="img/play.png" /></button>
+					<button id="stop" class="btn"><img src="img/stop.png" /></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</body>

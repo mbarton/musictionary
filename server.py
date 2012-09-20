@@ -64,7 +64,7 @@ def index():
 def getstaus():
     return 'We are on!'
 
-def main():
+def init():
 	# Random words!
 	app.words = open("/usr/share/dict/words").readlines()
 
@@ -78,10 +78,14 @@ def main():
 	pusher.key = sys.argv[2];
 	pusher.secret = sys.argv[3];
 	app.p = pusher.Pusher()
-	persist()
+	#persist()
+
+def main():
+	init()
 	app.run(debug=True, host='0.0.0.0')
 
 def create_app():
+	init()
     return app
 
 if __name__ == "__main__":

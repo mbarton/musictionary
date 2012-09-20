@@ -7,5 +7,5 @@ touch shoutd
 chmod a=rx shoutd
 
 touch shoutd.log
-chmod o+rw
-
+chmod o+rw shoutd.log
+ 

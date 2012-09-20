@@ -86,7 +86,7 @@ def main():
 
 def create_app():
 	init()
-    return app
+	return app
 
 if __name__ == "__main__":
 	main();

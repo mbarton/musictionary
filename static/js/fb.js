@@ -1,5 +1,4 @@
 window.fbAsyncInit = function() {
-  alert(app.secret.fb_app_id);
   FB.init({
     appId      : app.secret.fb_app_id, // App ID
     channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File

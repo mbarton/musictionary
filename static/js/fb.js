@@ -7,7 +7,31 @@ window.fbAsyncInit = function() {
     xfbml      : true  // parse XFBML
   });
 
-  // Additional initialization code here
+  user_info_el   = document.getElementById('user_info'),
+  update_user_info = function(response) {
+    if (response.status != 'connected') {
+      user_info_el.innerHTML = '';
+      return;
+    }
+
+    FB.api(
+      {
+        method: 'fql.query',
+        query: 'SELECT name, pic_square FROM user WHERE uid=' + response.authResponse.userID
+      },
+      function(response) {
+        user_info_el.innerHTML = (
+          '<img src="' + response[0].pic_square + '" width="32px" height="32px"> ' +
+          response[0].name
+        );
+      }
+    );
+  };
+
+  FB.Event.subscribe('auth.login', update_user_info);
+  FB.Event.subscribe('auth.logout', update_user_info);
+  FB.getLoginStatus(update_user_info);
+
 };
 
 // Load the SDK Asynchronously

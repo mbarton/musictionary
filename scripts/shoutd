@@ -10,7 +10,7 @@
 
 name="shoutfb"
 user="nginx"
-exec="/opt/shoutfb/start.sh"
+exec="/opt/shoutfb/scripts/start.sh"
 pidfile="/tmp/shoutd.pid"
 
 lockfile=/var/lock/subsys/shoutfb

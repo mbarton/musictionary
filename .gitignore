@@ -2,5 +2,8 @@
 run
 
 static/js/secret.js
+shoutfb/
+shoutd.log
 
 db
+*.pyc

@@ -60,6 +60,10 @@ def index():
 
 	return render_template('index.html', vparams=params)
 
+@app.route('/status/', methods=['GET'])
+def getstaus():
+    return 'We are on!'
+
 def main():
 	# Random words!
 	app.words = open("/usr/share/dict/words").readlines()
@@ -76,6 +80,9 @@ def main():
 	app.p = pusher.Pusher()
 	persist()
 	app.run(debug=True, host='0.0.0.0')
+
+def create_app():
+    return app
 
 if __name__ == "__main__":
 	main();

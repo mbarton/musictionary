@@ -2,6 +2,17 @@
 
 MusictionaryFacebook = function(secret) {
 
+  confirmExit = function() {
+    if (app.currentUserId != null) {
+      var url = "player/" + MusictionaryRoom + "/" + app.currentUserId;
+      $.ajax(url, {type: "DELETE"});
+    }
+  }
+
+  window.onbeforeunload = confirmExit;
+
+
+
   var self = {};
 
   $(function(){
@@ -46,12 +57,12 @@ MusictionaryFacebook = function(secret) {
 
     var user_info_el = $('#user_info');
 
-    refresh_connected_users = function(ids_map) {
+    refresh_connected_users = function(ids) {
       $('#connected_users').empty()
-      $.each(ids_map, function(key, val) {
+      _.each(ids, function(val) {
         get_user_info(val, function(user_info) {
             $('#connected_users').append('<div class="user_info_item"><img src="' + user_info.pic_square + '" /><div><a href="https://www.facebook.com/'+user_info.username+'">'+user_info.name+'</a></div></div>');
-        });        
+        });
       });
     }
 
@@ -102,6 +113,9 @@ MusictionaryFacebook = function(secret) {
 
     FB.Event.subscribe('auth.login', update_user_info);
     FB.Event.subscribe('auth.logout', update_user_info);
+
+    app.net.channel.bind('presence', update_user_info);
+
     /*FB.getLoginStatus(update_user_info);*/
   };
 

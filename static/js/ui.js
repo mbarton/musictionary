@@ -104,6 +104,9 @@ self.setEditing = function(index){
 $(function(){
 
 $(".trigger").live("click", function(){
+	if(MusictionaryHost == "False")
+		return
+
 	var instrument = $(this).parent().children(".label").html();
 	var index = $(this).parent().children(".trigger").index(this);
 	// Flip flop!
@@ -123,7 +126,14 @@ $("#stop").click(function(){
 	app.stop();
 });
 
+$("#songD").click(function(){
+	$("#guesser").html("<h1>YOU ARE CORRECT ROCK ON!</h1>");
+})
+
 $("body").keydown(function(ev){
+	if(MusictionaryHost == "False")
+		return
+
 	switch(ev.keyCode)
 	{
 		case UP_ARROW:

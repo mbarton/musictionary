@@ -8,6 +8,10 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+#sequencer
+{
+	margin-top: 50px;
+}
 .track
 {
 	clear: both;
@@ -24,7 +28,7 @@
 	padding-bottom: 20px;
 	text-align: center;
 	border-radius: 5px;
-	margin-top: 50px;
+	margin-top: 10px;
 }
 #sequencer .span1.label
 {
@@ -109,4 +113,9 @@
 	width: 80px;
 	margin: 4px;
 	text-align: center;
+}
+
+.editing
+{
+	background-color: rgb(156, 17, 17) !important;
 }

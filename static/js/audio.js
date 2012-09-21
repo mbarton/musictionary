@@ -11,13 +11,7 @@ self.decodeAudio = function(track, buf){
 	});
 }
 
-self.loadSample = function(track, path){
-	if(self.samples[track] !== undefined &&
-	   self.samples[track].path === path)
-		return;
-
-	self.samples[track] = {"path": path};
-
+self.loadOneShot = function(track, path){
 	var req = new XMLHttpRequest();
 	req.onload = function(args){
 		console.log("Downloaded " + path + " for track " + track);
@@ -26,12 +20,31 @@ self.loadSample = function(track, path){
 	req.open('GET', path, true);
 	req.responseType = 'arraybuffer';
 	req.send();
+}
+
+self.loadMelodic = function(track, path){
+	_.each(["A", "As", "B", "C", "Cs", "D", "Ds", "E", "F", "Fs", "G", "Gs"], function(note){
+		var samplePath = path.substring(0, path.indexOf(".")) + note + ".mp3"; 
+		console.log("loading " + samplePath);
+	});	
+}
+
+self.loadSample = function(track){
+	if(self.samples[track.sample] !== undefined &&
+	   self.samples[track.sample].path === track.path)
+		return;
+
+	self.samples[track.sample] = {}
+	//self.samples[track.sample] = {"path": track.path};
+
+	if(track.melodic)
+		self.loadMelodic(track.sample, track.path);
+	else
+		self.loadOneShot(track.sample, track.path);
 };
 
 self.loadSamples = function(matrix){
-	_.each(matrix, function(track){
-		self.loadSample(track.sample, track.path);
-	});
+	_.each(matrix, self.loadSample);
 }
 
 self.playOnce = function(track){

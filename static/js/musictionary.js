@@ -1,16 +1,18 @@
 var app = (function($){
 
 var self = {}
-/* Enable this for offline testing!
+/*// Enable this for offline testing!
 self.matrix = [
-	{"sample": "kick", "path": "static/samples/kick.mp3",
+	{"sample": "kick", "path": "static/samples/kick.mp3", "editing": "true",
 	 "triggers": [true, false, false, false, true, false, false, false, true, false, false, false, true, false, false, false]},
 	{"sample": "hat", "path": "static/samples/hat.mp3",
 	 "triggers": [false, false, true, false, false, false, true, false, false, false, true, false, false, false, true, false]},
 	{"sample": "snare", "path": "static/samples/snare.mp3",
 	 "triggers": [false, false, false, false, true, false, false, false, false, false, false, false, true, false, false, false]}, 
 	{"sample": "crash", "path": "static/samples/crash.mp3",
-	 "triggers": [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]}	 
+	 "triggers": [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]},
+	{"sample": "bass", "path": "static/samples/bass.mp3", "melodic": "true",
+	 "triggers": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]}
 ];
 */
 self.cursor = 0;
@@ -22,8 +24,25 @@ self.audio = MusictionaryAudio();
 self.ui = MusictionaryUI($, self);
 self.net = MusictionaryNet(self.secret, self, self.ui);
 
+self.editTrack = function(ix){
+	_.each(self.matrix, function(track){
+		track.editing = false;
+	});
+
+	self.matrix[ix].editing = true;
+
+	self.ui.setEditing(ix);
+}
+
+self.toggle = function(sample, step){
+	var track = _.find(self.matrix, function(track){ return track.sample === sample; });
+	track.triggers[step] = !track.triggers[step];
+	self.net.pushUpdate(sample, step, track.triggers[step]);
+	self.ui.setTrigger(sample, step, track.triggers[step]);
+};
+
 self.update = function(sample, step, enabled, local_only){
-	var track = _.find(self.matrix, function(track){ return track.sample === sample; })
+	var track = _.find(self.matrix, function(track){ return track.sample === sample; });
 	if(track.triggers[step] !== enabled){
 		track.triggers[step] = enabled;
 		if(local_only === undefined)

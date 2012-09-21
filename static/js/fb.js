@@ -2,6 +2,17 @@
 
 MusictionaryFacebook = function(secret) {
 
+  confirmExit = function() {
+    if (app.currentUserId != null) {
+      var url = "player/" + MusictionaryRoom + "/" + app.currentUserId;
+      $.ajax(url, {type: "DELETE"});
+    }
+  }
+
+  window.onbeforeunload = confirmExit;
+
+
+
   var self = {};
 
   $(function(){
@@ -102,6 +113,9 @@ MusictionaryFacebook = function(secret) {
 
     FB.Event.subscribe('auth.login', update_user_info);
     FB.Event.subscribe('auth.logout', update_user_info);
+
+    app.net.channel.bind('presence', update_user_info);
+
     /*FB.getLoginStatus(update_user_info);*/
   };
 

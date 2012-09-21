@@ -46,12 +46,12 @@ MusictionaryFacebook = function(secret) {
 
     var user_info_el = $('#user_info');
 
-    refresh_connected_users = function(ids_map) {
+    refresh_connected_users = function(ids) {
       $('#connected_users').empty()
-      $.each(ids_map, function(key, val) {
+      _.each(ids, function(val) {
         get_user_info(val, function(user_info) {
             $('#connected_users').append('<div class="user_info_item"><img src="' + user_info.pic_square + '" /><div><a href="https://www.facebook.com/'+user_info.username+'">'+user_info.name+'</a></div></div>');
-        });        
+        });
       });
     }
 

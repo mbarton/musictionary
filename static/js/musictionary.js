@@ -12,9 +12,10 @@ self.matrix = [
 	{"sample": "crash", "path": "static/samples/crash.mp3",
 	 "triggers": [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]},
 	{"sample": "bass", "path": "static/samples/bass.mp3", "melodic": "true",
-	 "triggers": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]}
+	 "triggers": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+	 "notes": ["C", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]}
 ];
-*/
+//*/
 self.cursor = 0;
 self.tempo = 140;
 // Matrix is included by Flask on initial load
@@ -41,6 +42,13 @@ self.toggle = function(sample, step){
 	self.ui.setTrigger(sample, step, track.triggers[step]);
 };
 
+self.setNote = function(sample, step, note){
+	var track = _.find(self.matrix, function(track){ return track.sample === sample; });
+	track.notes[step] = note;
+	self.ui.setNote(sample, step, note);
+	// TODO MRB: update pusha when the endpoint is there! HOLLA!
+}
+
 self.update = function(sample, step, enabled, local_only){
 	var track = _.find(self.matrix, function(track){ return track.sample === sample; });
 	if(track.triggers[step] !== enabled){
@@ -54,7 +62,12 @@ self.playStep = function(){
 	self.ui.setCursor(self.cursor);
 	_.each(self.matrix, function(track){
 		if(track.triggers[self.cursor])
-			self.audio.playOnce(track.sample);
+		{
+			if(track.melodic)
+				self.audio.playNote(track.sample, track.notes[self.cursor]);
+			else
+				self.audio.playOnce(track.sample);
+		}
 	});
 
 	if(self.cursor === self.matrix[0].triggers.length - 1)

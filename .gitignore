@@ -7,3 +7,5 @@ shoutd.log
 
 db
 *.pyc
+
+static/samples/.DS_Store

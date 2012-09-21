@@ -16,7 +16,7 @@ self.channel.bind('change', function(data){
 });
 
 self.pushUpdate = function(sample, step, enabled){
-	///* ENABLE SERVER COMMS
+	//* ENABLE SERVER COMMS
 	var url = "change/" + MusictionaryRoom + "/" + sample + "/" + step;
 	if(enabled)
 		$.ajax(url, {type: "POST"});

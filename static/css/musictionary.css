@@ -39,6 +39,7 @@
 	cursor: pointer;
 	/*-webkit-transition: background-color .2s;*/
 	width: 50px;
+	color: white;
 }
 .trigger:hover
 {

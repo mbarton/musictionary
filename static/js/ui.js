@@ -5,6 +5,21 @@ var UP_ARROW = 38;
 var DOWN_ARROW = 40;
 var X_KEY = 88;
 
+var KEYS_TO_NOTES = {
+	90: "C",
+	83: "Cs",
+	88: "D",
+	68: "Ds",
+	67: "E",
+	86: "F",
+	71: "Fs",
+	66: "G",
+	72: "Gs",
+	78: "A",
+	74: "As",
+	77: "B"
+};
+
 self.cursor = -1;
 
 self.buildMatrix = function(matrix)
@@ -37,9 +52,24 @@ self.buildMatrix = function(matrix)
 self.setTrigger = function(instrument, index, enabled){
 	var trigger = $($(".label:contains(" + instrument + ")").siblings()[index]);
 	if(enabled)
+	{
+		// Add note if needed
+		var track = _.find(app.matrix, function(track){ return track.sample === instrument; });
+		if(track.melodic)
+			trigger.html(track.notes[index]);
 		trigger.addClass("enabled");
+	}
 	else
+	{
 		trigger.removeClass("enabled");
+		// remove note text if there
+		trigger.html("");
+	}
+};
+
+self.setNote = function(instrument, index, note){
+	var trigger = $($(".label:contains(" + instrument + ")").siblings()[index]);
+	trigger.html(note);
 };
 
 self.setCursor = function(index){
@@ -103,17 +133,32 @@ $("body").keydown(function(ev){
 
 			app.editTrack(new_index);
 			break;
-		case X_KEY:
-			if(self.cursor !== -1)
-			{
-				var sample = $(".editing").html();
-				app.toggle(sample, self.cursor);
-				// App triggers the UI update. MANY LOLZ!
-				// HEY USER! You actually did something so play the sound!
-				app.audio.playOnce(sample);
-			}
-			break;
+	}
 
+	// Bring the pain!
+	// Work out which note we need using the magic note mapping!
+	var sample = $(".editing").html();
+	var track = _.find(app.matrix, function(track){ return track.sample === sample; });
+	if(track.melodic)
+	{
+		var note = KEYS_TO_NOTES[ev.keyCode];
+		if(note !== undefined)
+		{
+			// TODO MRB: toggling notes!
+			console.log(note);
+			if(self.cursor !== -1)
+				app.toggle(sample, self.cursor);
+				app.setNote(sample, self.cursor, note);
+			// Hapticityityityityity
+			app.audio.playNote(sample, note);
+		}
+	}
+	else if(ev.keyCode === X_KEY)
+	{
+		if(self.cursor !== -1)
+			app.toggle(sample, self.cursor);
+		// Hapticity
+		app.audio.playOnce(sample);
 	}
 });
 

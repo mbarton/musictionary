@@ -16,14 +16,14 @@
 <div id="homepage">
     	<div class="hero-unit">
     		<h1>Create a new groove...</h1>
-    		<a class="btn btn-primary" href="{{ vparams.newroom }}">Get Started</a>
+    		<a class="btn btn-primary" href="api/{{ vparams.newroom }}">Get Started</a>
     		<div style="clear: both; height: 0px">&nbsp;</div>
     	</div>
         <div class="row">
             <div class="span6">
                 <h3>Or join an existing room:</h3>
                 {% for room in vparams.existing %}
-                <strong><a href="{{ room }}">{{ room }}</a></strong>
+                <strong><a href="{{ room }}">api/{{ room }}</a></strong>
                 {% endfor %}
             </div>
         </div>

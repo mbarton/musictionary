@@ -44,6 +44,8 @@ self.playStep = function(){
 		self.cursor++;
 };
 
+self.currentUserId = null;
+
 self.msPerSemiquaver = function(){
 	return ((1.0 / (self.tempo / 60.0)) / 4.0) * 1000;
 };

@@ -1,36 +1,69 @@
 window.fbAsyncInit = function() {
   FB.init({
     appId      : app.secret.fb_app_id, // App ID
-    channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
+    channelUrl : 'http://localhost:5000/static/html/channel.html', // Channel File
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true  // parse XFBML
   });
 
-  user_info_el   = document.getElementById('user_info'),
+  user_info_el = $('#user_info');
+
+  refresh_connected_users = function(ids_map) {
+    $('#connected_users').empty()
+    $.each(ids_map, function(key, val) {
+      get_user_info(val, function(user_info) {
+          $('#connected_users').append('<img src="' + user_info.pic_square + '" >');
+      });        
+    });
+  }
+
+  get_user_info = function(id, success) {
+        FB.api(
+      {
+        method: 'fql.query',
+        query: 'SELECT uid, name, pic_square FROM user WHERE uid=' + id
+      },
+      function(response) {
+        success(response[0]);
+      }
+    );
+  }
+
   update_user_info = function(response) {
     if (response.status != 'connected') {
-      user_info_el.innerHTML = '';
+      user_info_el.html('');
+      if (app.currentUserId != null) {
+        url = "player/" + MusictionaryRoom + "/" + app.currentUserId;
+        $.ajax(url, {type: "DELETE"});
+      }
+      app.currentUserId = null;
       return;
     }
 
+    userId = response.authResponse.userID;
     FB.api(
       {
         method: 'fql.query',
-        query: 'SELECT name, pic_square FROM user WHERE uid=' + response.authResponse.userID
+        query: 'SELECT name, pic_square FROM user WHERE uid=' + userId
       },
       function(response) {
-        user_info_el.innerHTML = (
+        user_info_el.html(
           '<img src="' + response[0].pic_square + '" width="32px" height="32px"> ' +
-          response[0].name
+          response[0].name          
         );
+        app.currentUserId = userId;
+        url = "player/" + MusictionaryRoom + "/" + userId;
+
+        $.ajax(url, {type: "POST"});
+        $.getJSON(url, refresh_connected_users);
       }
     );
   };
 
   FB.Event.subscribe('auth.login', update_user_info);
   FB.Event.subscribe('auth.logout', update_user_info);
-  FB.getLoginStatus(update_user_info);
+  /*FB.getLoginStatus(update_user_info);*/
 
 };
 
@@ -42,3 +75,4 @@ window.fbAsyncInit = function() {
    js.src = "//connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
 }(document));
+

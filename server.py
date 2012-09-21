@@ -36,6 +36,18 @@ def change(room, sample, position):
 
 	return "Done"
 
+@app.route("/player/<room>/<facebook_id>", methods=['GET', 'POST', 'DELETE'])
+def player(room, facebook_id):
+	#Add or remove a player from a room
+	if request.method == 'POST':
+		print "adding player {0} to room {1}".format(facebook_id, room)
+	elif request.method == 'DELETE':
+		print "removing player {0} to room {1}".format(facebook_id, room)
+	else:
+		return json.dumps({'0': 681421705, '1': 100004387927649})
+
+	return "Done"
+
 @app.route("/<room>")
 def room(room):
 	if room == "favicon.ico":

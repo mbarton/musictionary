@@ -13,7 +13,7 @@ window.fbAsyncInit = function() {
     $('#connected_users').empty()
     $.each(ids_map, function(key, val) {
       get_user_info(val, function(user_info) {
-          $('#connected_users').append('<table><tr><td><img src="' + user_info.pic_square + '" ></td></tr><tr><td>'+user_info.name+'</td></tr></table>');
+          $('#connected_users').append('<div class="user_info_item"><img src="' + user_info.pic_square + '" /><div>'+user_info.name+'</div></div>');
       });        
     });
   }

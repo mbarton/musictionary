@@ -114,7 +114,10 @@ MusictionaryFacebook = function(secret) {
     FB.Event.subscribe('auth.login', update_user_info);
     FB.Event.subscribe('auth.logout', update_user_info);
 
-    app.net.channel.bind('presence', update_user_info);
+    app.net.channel.bind('presence', function() {
+          var url = "player/" + MusictionaryRoom + "/" + app.currentUserId;
+          $.getJSON(url, refresh_connected_users);
+    });
 
     /*FB.getLoginStatus(update_user_info);*/
   };

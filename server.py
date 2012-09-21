@@ -18,6 +18,7 @@ app.default_matrix = [
 	 "triggers": [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
 	 "notes": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""], "editing": True}
 ]
+app.users = {}
 
 def randomRoomName():
 	return "%s%d" % (random.choice(app.words), random.randint(1, 99))
@@ -53,10 +54,14 @@ def player(room, facebook_id):
 	#Add or remove a player from a room
 	if request.method == 'POST':
 		print "adding player {0} to room {1}".format(facebook_id, room)
+		app.p[room].trigger('presence', {"state": "add","facebook_id": facebook_id})
+		app.users[room].append(facebook_id)
 	elif request.method == 'DELETE':
 		print "removing player {0} to room {1}".format(facebook_id, room)
+		app.p[room].trigger('presence', {"state": "del","facebook_id": facebook_id})
+		app.users[room].remove(facebook_id)
 	else:
-		return json.dumps({'0': 681421705, '1': 100004387927649})
+		return json.dumps(app.users[room])
 
 	return "Done"
 
@@ -68,6 +73,7 @@ def room(room):
 
 	if not room in app.rooms:
 		app.rooms[room] = copy.deepcopy(app.default_matrix)
+		app.users[str(room)] = []
 	return render_template('room.html', matrix=json.dumps(app.rooms[room]), room=room)
 
 @app.route("/")
@@ -76,6 +82,8 @@ def index():
 	room = randomRoomName()
 	while room in app.rooms:
 		room = randomRoomName()
+	
+	app.users[str(room)] = []
 
 	# Build a list of random existing rooms
 	max_room_links = 10 if len(app.rooms) > 10 else len(app.rooms)

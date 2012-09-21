@@ -17,7 +17,7 @@ self.matrix = [
 ];
 //*/
 self.cursor = 0;
-self.tempo = 140;
+self.tempo = 120;
 // Matrix is included by Flask on initial load
 self.matrix = MusictionaryMatrix;
 self.secret = MusictionarySecret();

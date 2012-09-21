@@ -12,6 +12,7 @@
 		MusictionaryMatrix = {{ matrix|safe }}
 		// TODO MRB: CAN U SPOT THE XSS ATTACK!
 		MusictionaryRoom = "{{ room|safe }}"
+		MusictionaryHost = "{{ host|safe }}"
 	</script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/secret.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/net.js') }}"></script>
@@ -50,12 +51,23 @@
 					<button id="stop" class="btn"><img src="{{ url_for('static', filename='img/stop.png') }}" /></button>
 				</div>
 			</div>
+			{% if host %}
 			<div class="span6">
 				<h2>Recreate <strong>Thriller - Michael Jackson</strong>!</h2>
 			</div>
 			<div class="span2">
 				<button id="playclip">Play Clip</button>
 			</div>
+			{% else %}
+			<div class="span7" id="guesser">
+				<h2>What is this tune?</h2>
+				<button id="songA">Beat It - Michael Jackson</button>
+				<button id="songB">Bangarang - Skrillex</button>
+				<button id="songC">Night Fever - The Bee Gees</button>
+				<button id="songD">Thriller - Michael Jackson</button>
+				<button id="songE">Telephone - Lady Gaga</button>
+			</div>
+			{% endif %}
 		</div>
 	</div>
 </div>

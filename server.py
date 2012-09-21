@@ -70,11 +70,12 @@ def room(room):
 	if room == "favicon.ico":
 		# LOL
 		return ""
-
+	host = False
 	if not room in app.rooms:
 		app.rooms[room] = copy.deepcopy(app.default_matrix)
+		host = True
 		app.users[str(room)] = []
-	return render_template('room.html', matrix=json.dumps(app.rooms[room]), room=room)
+	return render_template('room.html', matrix=json.dumps(app.rooms[room]), room=room, host=host)
 
 @app.route("/")
 def index():

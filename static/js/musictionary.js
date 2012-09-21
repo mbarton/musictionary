@@ -24,6 +24,7 @@ self.secret = MusictionarySecret();
 self.audio = MusictionaryAudio();
 self.ui = MusictionaryUI($, self);
 self.net = MusictionaryNet(self.secret, self, self.ui);
+self.fb = MusictionaryFacebook(self.secret);
 
 self.editTrack = function(ix){
 	_.each(self.matrix, function(track){

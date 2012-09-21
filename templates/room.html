@@ -16,8 +16,8 @@
 	<script type="text/javascript" src="{{ url_for('static', filename='js/net.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/audio.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/ui.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/musictionary.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/fb.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/musictionary.js') }}"></script>
 </head>
 <body>
 <div id="fb-root"></div>
@@ -29,6 +29,7 @@
         	<a class="brand error_report">
         	</a>
           <ul class="nav pull-right">
+            <li> <button id='share-button' class='btn'>Share </button> </li>
             <li> <a id="user_info"></a> </li>
             <li> <div class="fb-login-button brand" autologoutlink="true"/> </li>
           </ul>

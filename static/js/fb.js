@@ -29,7 +29,9 @@ MusictionaryFacebook = function(secret) {
     */
 
      FB.ui({ method: 'feed', 
-            message: 'Facebook for Websites is super-cool'});
+             name: 'Join my realtime Musictionary game!',
+             description: 'Follow the link and guess the song',
+             link: document.location.href });
 
   }
 
@@ -73,6 +75,7 @@ MusictionaryFacebook = function(secret) {
           $.ajax(url, {type: "DELETE"});
         }
         app.currentUserId = null;
+        $('#share-button').hide();
         return;
       }
 
@@ -92,6 +95,7 @@ MusictionaryFacebook = function(secret) {
 
           $.ajax(url, {type: "POST"});
           $.getJSON(url, refresh_connected_users);
+          $('#share-button').show();
         }
       );
     };

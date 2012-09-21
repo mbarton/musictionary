@@ -13,7 +13,7 @@ window.fbAsyncInit = function() {
     $('#connected_users').empty()
     $.each(ids_map, function(key, val) {
       get_user_info(val, function(user_info) {
-          $('#connected_users').append('<div class="user_info_item"><img src="' + user_info.pic_square + '" /><div>'+user_info.name+'</div></div>');
+          $('#connected_users').append('<div class="user_info_item"><img src="' + user_info.pic_square + '" /><div><a href="https://www.facebook.com/'+user_info.username+'">'+user_info.name+'</a></div></div>');
       });        
     });
   }
@@ -22,7 +22,7 @@ window.fbAsyncInit = function() {
         FB.api(
       {
         method: 'fql.query',
-        query: 'SELECT uid, name, pic_square FROM user WHERE uid=' + id
+        query: 'SELECT uid, username, name, pic_square FROM user WHERE uid=' + id
       },
       function(response) {
         success(response[0]);

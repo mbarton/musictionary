@@ -55,12 +55,14 @@ def player(room, facebook_id):
 	if request.method == 'POST':
 		print "adding player {0} to room {1}".format(facebook_id, room)
 		app.p[room].trigger('presence', {"state": "add","facebook_id": facebook_id})
-		app.users[room].append(facebook_id)
+		if facebook_id not in app.users[room]:
+			app.users[room].append(facebook_id)
 	elif request.method == 'DELETE':
 		print "removing player {0} to room {1}".format(facebook_id, room)
 		app.p[room].trigger('presence', {"state": "del","facebook_id": facebook_id})
 		app.users[room].remove(facebook_id)
 	else:
+		print json.dumps(app.users[room])
 		return json.dumps(app.users[room])
 
 	return "Done"

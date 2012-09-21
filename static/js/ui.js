@@ -36,14 +36,27 @@ self.buildMatrix = function(matrix)
 
 		var row = $("<div class='track row'></div>")
 			       .append(label);
-		
-		_.each(track.triggers, function(trigger){
-			var trigger_elem = $("<div class='trigger span1'>&nbsp;</div>");
-			if(trigger)
-				trigger_elem.addClass("enabled");
 
-			row.append(trigger_elem);
-		});
+		if(track.melodic)
+		{
+			_.each(_.zip(track.triggers, track.notes), function(trigger_note){
+				var trigger_elem = $("<div class='trigger span1'>&nbsp;</div>");
+				if(trigger_note[0])
+					trigger_elem.addClass("enabled");
+				trigger_elem.html(trigger_note[1]);
+				row.append(trigger_elem);
+			});
+		}
+		else
+		{
+			_.each(track.triggers, function(trigger){
+				var trigger_elem = $("<div class='trigger span1'>&nbsp;</div>");
+				console.log(track.sample);
+				if(trigger)
+					trigger_elem.addClass("enabled");
+				row.append(trigger_elem);
+			});
+		}
 
 		seq_elem.append(row);
 	});

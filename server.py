@@ -10,10 +10,13 @@ import sys
 app = Flask(__name__)
 app.rooms = {}
 app.default_matrix = [
-	{"sample": "kick", "path": "/static/samples/kick.mp3", "triggers": [True, False, False, False, True, False, False, False, True, False, False, False, True, False, False, False]},
-	{"sample": "hat", "path": "/static/samples/hat.mp3", "triggers": [False, False, True, False, False, False, True, False, False, False, True, False, False, False, True, False]},
-	{"sample": "snare", "path": "/static/samples/snare.mp3", "triggers": [False, False, False, False, True, False, False, False, False, False, False, False, True, False, False, False]},
-	{"sample": "crash" ,"path": "/static/samples/crash.mp3", "triggers": [True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+	{"sample": "kick", "path": "/static/samples/kick.mp3", "melodic": False, "triggers": [True, False, False, False, True, False, False, False, True, False, False, False, True, False, False, False]},
+	{"sample": "hat", "path": "/static/samples/hat.mp3", "melodic": False, "triggers": [False, False, True, False, False, False, True, False, False, False, True, False, False, False, True, False]},
+	{"sample": "snare", "path": "/static/samples/snare.mp3", "melodic": False, "triggers": [False, False, False, False, True, False, False, False, False, False, False, False, True, False, False, False]},
+	{"sample": "crash" ,"path": "/static/samples/crash.mp3", "melodic": False, "triggers": [True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]},
+	{"sample": "bass", "path": "/static/samples/bass.mp3", "melodic": True,
+	 "triggers": [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False],
+	 "notes": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""], "editing": True}
 ]
 
 def randomRoomName():
@@ -33,6 +36,15 @@ def change(room, sample, position):
 			track["triggers"][int(position)] = enabled
 	
 	app.p[room].trigger('change', {"sample": sample, "position": position, "enabled": enabled})
+
+	return "Done"
+
+@app.route("/note/<room>/<sample>/<position>/<note>", methods=['POST'])
+def note(room, sample, position, note):
+	for track in app.rooms[room]:
+		if track["melodic"] and track["sample"] == sample:
+			track["notes"][int(position)] = note
+			app.p[room].trigger('note', {"sample": sample, "position": position, "note": note})
 
 	return "Done"
 

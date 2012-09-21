@@ -42,11 +42,12 @@ self.toggle = function(sample, step){
 	self.ui.setTrigger(sample, step, track.triggers[step]);
 };
 
-self.setNote = function(sample, step, note){
+self.setNote = function(sample, step, note, local_only){
 	var track = _.find(self.matrix, function(track){ return track.sample === sample; });
 	track.notes[step] = note;
+	if(local_only === undefined)
+		self.net.pushNote(sample, step, note);
 	self.ui.setNote(sample, step, note);
-	// TODO MRB: update pusha when the endpoint is there! HOLLA!
 }
 
 self.update = function(sample, step, enabled, local_only){

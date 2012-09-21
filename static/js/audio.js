@@ -38,7 +38,6 @@ self.loadSample = function(track){
 		return;
 
 	self.samples[track.sample] = {}
-	//self.samples[track.sample] = {"path": track.path};
 
 	if(track.melodic)
 		self.loadMelodic(track.sample, track.path);
